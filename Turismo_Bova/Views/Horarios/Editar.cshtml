@@ -1,0 +1,41 @@
+﻿@model Turismo_Bova.Models.Horario
+@{
+    ViewData["Title"] = "Editar Horario";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2>Editar horario</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card border-warning">
+        <div class="card-body">
+            <form asp-action="Editar" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="HoraSalida" class="form-label"></label>
+                    <input asp-for="HoraSalida" type="time" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HoraLlegada" class="form-label"></label>
+                    <input asp-for="HoraLlegada" type="time" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RutaId" class="form-label">Ruta (Destino)</label>
+                    <select asp-for="RutaId" asp-items="ViewBag.RutaId" class="form-select"></select>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

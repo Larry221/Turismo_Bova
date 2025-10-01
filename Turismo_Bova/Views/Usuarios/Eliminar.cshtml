@@ -1,0 +1,38 @@
+﻿@model Turismo_Bova.Models.Usuario
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Eliminar Usuario</h4>
+                </div>
+                <div class="card-body">
+                    <p class="fs-5">
+                        ¿Estás seguro de que deseas eliminar al usuario
+                        <strong>@Model.Nombre</strong> con correo
+                        <strong>@Model.Correo</strong>?
+                    </p>
+
+                    <form asp-controller="Usuarios" asp-action="EliminarConfirmar" method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

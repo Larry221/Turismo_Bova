@@ -1,0 +1,43 @@
+﻿@model Turismo_Bova.Models.Vehiculo
+@{
+    ViewData["Title"] = "Editar Vehículo";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Editar vehículo</h1>
+    <div class="card border-warning">
+        <div class="card-body">
+            <form asp-action="Editar" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="Marca" class="form-label">Marca</label>
+                    <input asp-for="Marca" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Modelo" class="form-label">Modelo</label>
+                    <input asp-for="Modelo" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Placa" class="form-label">Placa</label>
+                    <input asp-for="Placa" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Capacidad" class="form-label">Capacidad</label>
+                    <input asp-for="Capacidad" class="form-control" type="number" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Estado" class="form-label">Estado</label>
+                    <input asp-for="Estado" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FechaAdquisicion" class="form-label">Fecha de Adquisición</label>
+                    <input name="FechaAdquisicion" class="form-control" type="date" value="@Model.FechaAdquisicion.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-warning">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

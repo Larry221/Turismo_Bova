@@ -1,0 +1,44 @@
+﻿@model Turismo_Bova.Models.Horario
+@{
+    ViewData["Title"] = "Registrar Horario";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2>Registrar nuevo horario</h2>
+
+    <div class="card border-success">
+        <div class="card-body">
+            <form asp-action="Crear" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="HoraSalida" class="form-label"></label>
+                    <input asp-for="HoraSalida" type="time" class="form-control" />
+                    <span asp-validation-for="HoraSalida" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HoraLlegada" class="form-label"></label>
+                    <input asp-for="HoraLlegada" type="time" class="form-control" />
+					<span asp-validation-for="HoraLlegada" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RutaId" class="form-label">Ruta (Destino)</label>
+                    <select asp-for="RutaId" asp-items="ViewBag.RutaId" class="form-select"></select>
+					<span asp-validation-for="RutaId" class="text-danger"></span>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

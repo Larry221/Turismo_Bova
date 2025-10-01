@@ -1,0 +1,48 @@
+﻿@model Turismo_Bova.Models.Contrato
+@{
+    ViewData["Title"] = "Editar Contrato";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2>Editar contrato</h2>
+
+    <div class="card border-warning">
+        <div class="card-body">
+            <form asp-action="Editar" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="FechaInicio" class="form-label"></label>
+                    <input asp-for="FechaInicio" class="form-control" type="date" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FechaFin" class="form-label"></label>
+                    <input asp-for="FechaFin" class="form-control" type="date" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Estado" class="form-label"></label>
+                    <input asp-for="Estado" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PrecioTotal" class="form-label"></label>
+                    <input asp-for="PrecioTotal" class="form-control" type="number" step="0.01" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ClienteId" class="form-label">Cliente</label>
+                    <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ServicioId" class="form-label">Servicio</label>
+                    <select asp-for="ServicioId" asp-items="ViewBag.ServicioId" class="form-select"></select>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

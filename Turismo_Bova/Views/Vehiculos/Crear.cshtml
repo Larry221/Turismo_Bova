@@ -1,0 +1,61 @@
+﻿@model Turismo_Bova.Models.Vehiculo
+@{
+    ViewData["Title"] = "Registrar Vehículo";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Registrar nuevo vehículo</h1>
+    <div class="card border-successc col-6">
+        <div class="card-body">
+            <form asp-action="Crear" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label asp-for="Marca" class="form-label"></label>
+                    <input asp-for="Marca" class="form-control" />
+                    <span asp-validation-for="Marca" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Modelo" class="form-label"></label>
+                    <input asp-for="Modelo" class="form-control" />
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Placa" class="form-label"></label>
+                    <input asp-for="Placa" class="form-control" />
+                    <span asp-validation-for="Placa" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Capacidad" class="form-label"></label>
+                    <input asp-for="Capacidad" class="form-control" type="number" min="1" />
+                    <span asp-validation-for="Capacidad" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Estado" class="form-label"></label>
+                    <input asp-for="Estado" class="form-control" />
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FechaAdquisicion" class="form-label"></label>
+                    <input asp-for="FechaAdquisicion" class="form-control" type="date" />
+                    <span asp-validation-for="FechaAdquisicion" class="text-danger"></span>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

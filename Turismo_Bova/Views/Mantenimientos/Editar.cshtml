@@ -1,0 +1,57 @@
+﻿@model Turismo_Bova.Models.Mantenimiento
+@{
+    ViewData["Title"] = "Editar Mantenimiento";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2>Editar mantenimiento</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card border-warning">
+        <div class="card-body">
+            <form asp-action="Editar" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="TipoMantenimiento" class="form-label"></label>
+                    <input asp-for="TipoMantenimiento" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Descripcion" class="form-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FechaInicio" class="form-label"></label>
+                    <input asp-for="FechaInicio" class="form-control" type="date" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FechaFin" class="form-label"></label>
+                    <input asp-for="FechaFin" class="form-control" type="date" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="VehiculoId" class="form-label">Vehículo</label>
+                    <select asp-for="VehiculoId" class="form-select" asp-items="ViewBag.VehiculoId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EmpleadoId" class="form-label">Empleado</label>
+                    <select asp-for="EmpleadoId" class="form-select" asp-items="ViewBag.EmpleadoId"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProveedorId" class="form-label">Proveedor</label>
+                    <select asp-for="ProveedorId" class="form-select" asp-items="ViewBag.ProveedorId"></select>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

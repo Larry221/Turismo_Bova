@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model Turismo_Bova.Models.Usuario
+
+@{
+    ViewData["Title"] = "Editar - Usuario";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Dashboard.css" />
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="dashboard-header mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1>Editar usuario</h1>
+                </div>
+                <div>
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-calendar me-2"></i>
+                        <span id="current-date"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-usuarios">
+                    <div class="card-body">
+                        <form asp-controller="Usuarios" asp-action="Editar" method="post">
+                            <input asp-for="Id" type="hidden" />
+
+                            <div class="mb-3">
+                                <label asp-for="Nombre" class="form-label">Nombre</label>
+                                <input asp-for="Nombre" class="form-control" required />
+                                <span asp-validation-for="Nombre" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Correo" class="form-label">Correo</label>
+                                <input asp-for="Correo" class="form-control" required />
+                                <span asp-validation-for="Correo" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Contraseña" class="form-label">Contraseña</label>
+                                <input asp-for="Contraseña" type="password" class="form-control" required />
+                                <span asp-validation-for="Contraseña" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="RolId" class="form-label">Rol</label>
+                                <select asp-for="RolId" class="form-select" asp-items="ViewBag.Roles" required>
+                                    <option value="">Seleccione un rol</option>
+                                </select>
+                                <span asp-validation-for="RolId" class="text-danger small"></span>
+                            </div>
+
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-save me-1"></i> Guardar
+                                </button>
+                                <a asp-controller="Usuarios" asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Volver
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('es-ES', options);
+
+       
+        }
+    </script>
+</body>
+</html>

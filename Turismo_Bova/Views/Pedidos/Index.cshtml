@@ -1,0 +1,131 @@
+﻿@model List<Turismo_Bova.Models.Pedido>
+@{
+    ViewData["Title"] = "Pedidos";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Dashboard.css" />
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="dashboard-header">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h1>Gestión de Pedidos</h1>
+                    <p class="mb-0">Listado y administración de pedidos realizados</p>
+                </div>
+                <div>
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-calendar me-2"></i>
+                        <span id="current-date"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-rutas">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="section-title mb-0">Listado de Pedidos</h4>
+                    <a asp-controller="Pedidos" asp-action="Crear" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Nuevo Pedido
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="tablaPedidos" class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Fecha de Pedido</th>
+                                <th>Estado</th>
+                                <th>Proveedor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Descripcion</td>
+                                    <td>@item.FechaPedido.ToShortDateString()</td>
+                                    <td>@item.Estado</td>
+                                    <td>@item.proveedor?.RazonSocial</td>
+                                    <td>
+                                        <a asp-action="Mostrar" asp-route-id="@item.Id" class="btn btn-info btn-sm me-1">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm btn-eliminar" data-id="@item.Id">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-start mt-3">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <form id="form-eliminar" method="post" asp-controller="Pedidos" asp-action="EliminarConfirmar" style="display:none;">
+            <input type="hidden" name="id" id="input-id" />
+        </form>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Confirmación de eliminación
+            document.querySelectorAll('.btn-eliminar').forEach(button => {
+                button.addEventListener('click', function () {
+                    const pedidoId = this.dataset.id;
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('input-id').value = pedidoId;
+                            document.getElementById('form-eliminar').submit();
+                        }
+                    });
+                });
+            });
+
+            // Fecha actual
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('es-ES', options);
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaPedidos').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}

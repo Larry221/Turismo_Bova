@@ -1,0 +1,107 @@
+﻿@model List<Turismo_Bova.Models.Asignacion_Ruta_Vehiculo_Horario>
+@{
+    ViewData["Title"] = "Asignaciones";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var cargoUsuario = User.Claims.FirstOrDefault(c => c.Type == "Cargo")?.Value;
+    bool esConductor = cargoUsuario == "Conductor";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Asignaciones</h1>
+        @if (!esConductor)
+        {
+            <a asp-action="Crear" class="btn btn-success">
+                <i class="fas fa-plus"></i> Nueva Asignación
+            </a>
+        }
+    </div>
+
+    <div class="card border-primary">
+        <div class="card-body">
+            <table id="tablaAsignaciones" class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Vehículo</th>
+                        <th>Ruta</th>
+                        <th>Horario</th>
+                        @if (!esConductor)
+                        {
+                            <th>Empleado</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td>@a.FechaAsignacion.ToShortDateString()</td>
+                            <td>@a.vehiculo?.Placa</td>
+                            <td>@a.ruta?.Origen → @a.ruta?.Destino</td>
+                            <td>@a.horario?.HoraSalida.ToShortTimeString() - @a.horario?.HoraLlegada.ToShortTimeString()</td>
+
+                            @if (!esConductor)
+                            {
+                                <td>@a.empleado?.Nombre</td>
+                                <td>@a.Estado</td>
+                                <td>
+                                    <a asp-action="Editar" asp-route-id="@a.Id" class="btn btn-warning btn-sm me-1">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm btn-eliminar" data-id="@a.Id">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 🔁 Formulario oculto para envío del ID a eliminar -->
+<form id="form-eliminar" method="post" asp-action="EliminarConfirmar" style="display:none;">
+    <input type="hidden" name="id" id="input-id" />
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tablaAsignaciones').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                },
+                lengthMenu: [5, 10, 25, 50]
+            });
+
+            // Confirmación SweetAlert
+            document.querySelectorAll('.btn-eliminar').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.dataset.id;
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "Esta acción no se puede deshacer.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('input-id').value = id;
+                            document.getElementById('form-eliminar').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,77 @@
+﻿@model Turismo_Bova.Models.Mantenimiento
+@{
+    ViewData["Title"] = "Registrar Mantenimiento";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2>Registrar nuevo mantenimiento</h2>
+
+    <div class="card border-success">
+        <div class="card-body">
+            <form asp-action="Crear" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="TipoMantenimiento" class="form-label"></label>
+                    <input asp-for="TipoMantenimiento" class="form-control" />
+                    <span asp-validation-for="TipoMantenimiento" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Descripcion" class="form-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FechaInicio" class="form-label"></label>
+                    <input asp-for="FechaInicio" class="form-control" type="date" />
+                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FechaFin" class="form-label"></label>
+                    <input asp-for="FechaFin" class="form-control" type="date" />
+                    <span asp-validation-for="FechaFin" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="VehiculoId" class="form-label">Vehículo</label>
+                    <select asp-for="VehiculoId" class="form-select" asp-items="ViewBag.VehiculoId">
+                        <option value="">-- Seleccionar vehículo --</option>
+                    </select>
+                    <span asp-validation-for="VehiculoId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="EmpleadoId" class="form-label">Empleado</label>
+                    <select asp-for="EmpleadoId" class="form-select" asp-items="ViewBag.EmpleadoId">
+                        <option value="">-- Seleccionar empleado --</option>
+                    </select>
+                    <span asp-validation-for="EmpleadoId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProveedorId" class="form-label">Proveedor</label>
+                    <select asp-for="ProveedorId" class="form-select" asp-items="ViewBag.ProveedorId">
+                        <option value="">-- Seleccionar proveedor --</option>
+                    </select>
+                    <span asp-validation-for="ProveedorId" class="text-danger"></span>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

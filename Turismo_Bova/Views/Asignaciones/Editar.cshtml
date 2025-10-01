@@ -1,0 +1,48 @@
+﻿@model Turismo_Bova.Models.Asignacion_Ruta_Vehiculo_Horario
+@{
+    ViewData["Title"] = "Editar Asignación";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2>Editar asignación</h2>
+
+    <div class="card border-warning">
+        <div class="card-body">
+            <form asp-action="Editar" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="FechaAsignacion" class="form-label"></label>
+                    <input asp-for="FechaAsignacion" class="form-control" type="date" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="VehiculoId" class="form-label">Vehículo</label>
+                    <select asp-for="VehiculoId" asp-items="ViewBag.VehiculoId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EmpleadoId" class="form-label">Empleado</label>
+                    <select asp-for="EmpleadoId" asp-items="ViewBag.EmpleadoId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="RutaId" class="form-label">Ruta</label>
+                    <select asp-for="RutaId" asp-items="ViewBag.RutaId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HorarioId" class="form-label">Horario</label>
+                    <select asp-for="HorarioId" asp-items="ViewBag.HorarioId" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Estado" class="form-label"></label>
+                    <input asp-for="Estado" class="form-control" />
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

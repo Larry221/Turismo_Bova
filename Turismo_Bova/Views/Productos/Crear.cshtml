@@ -1,0 +1,93 @@
+﻿@model Turismo_Bova.Models.Producto
+@{
+    ViewData["Title"] = "Crear Producto";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Dashboard.css" />
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="dashboard-header mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1>Registrar nuevo producto</h1>
+                    <p class="mb-0">Complete los datos del nuevo producto</p>
+                </div>
+                <div>
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-calendar me-2"></i>
+                        <span id="current-date"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-facturas">
+                    <div class="card-body">
+                        <form asp-controller="Productos" asp-action="Crear" method="post">
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-3">
+                                <label asp-for="Nombre" class="form-label">Nombre del Producto</label>
+                                <input asp-for="Nombre" class="form-control" />
+                                <span asp-validation-for="Nombre" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Descripcion" class="form-label">Descripción</label>
+                                <input asp-for="Descripcion" class="form-control" />
+                                <span asp-validation-for="Descripcion" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="CantidadStock" class="form-label">Stock</label>
+                                <input asp-for="CantidadStock" class="form-control" />
+                                <span asp-validation-for="CantidadStock" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="PrecioUnidad" class="form-label">Precio Unidad</label>
+                                <input asp-for="PrecioUnidad" class="form-control" />
+                                <span asp-validation-for="PrecioUnidad" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="ProveedorId" class="form-label">Proveedor</label>
+                                <select asp-for="ProveedorId" asp-items="ViewBag.Proveedores" class="form-select">
+                                    <option value="">-- Selecciona un proveedor --</option>
+                                </select>
+                                <span asp-validation-for="ProveedorId" class="text-danger small"></span>
+                            </div>
+
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save me-1"></i> Guardar
+                                </button>
+                                <a asp-controller="Productos" asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Volver
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script>
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

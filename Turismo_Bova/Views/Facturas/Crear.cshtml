@@ -1,0 +1,56 @@
+﻿@model Turismo_Bova.Models.Factura
+
+@{
+    ViewData["Title"] = "Generar Factura";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <h2 class="mb-3">Generar nueva factura</h2>
+
+    <div class="card border-success shadow">
+        <div class="card-body">
+            <form asp-action="Crear" method="post">
+                @Html.AntiForgeryToken()
+
+                <!-- Mostrar errores generales -->
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="ContratoId" class="form-label">Contrato</label>
+                    <select asp-for="ContratoId" asp-items="ViewBag.ContratoId" class="form-select">
+                        <option value="">Seleccione un contrato</option>
+                    </select>
+                    <span asp-validation-for="ContratoId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="EstadoPago" class="form-label">Estado de Pago</label>
+                    <select asp-for="EstadoPago" class="form-select">
+                        <option value="">Seleccione estado de pago</option>
+                        <option value="Pagado">Pagado</option>
+                        <option value="Pendiente">Pendiente</option>
+                    </select>
+                    <span asp-validation-for="EstadoPago" class="text-danger"></span>
+                </div>
+
+                <div class="alert alert-info">
+                    El total e IGV se calcularan automáticamente según los pagos realizados del contrato.
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i> Generar Factura
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

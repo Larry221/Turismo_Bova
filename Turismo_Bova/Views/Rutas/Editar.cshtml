@@ -1,0 +1,44 @@
+﻿@model Turismo_Bova.Models.Ruta
+@{
+    ViewData["Title"] = "Editar Ruta";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid py-4">
+    <h2>Editar ruta</h2>
+    <div class="card border-warning">
+        <div class="card-body">
+            <form asp-action="Editar" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="Origen" class="form-label"></label>
+                    <input asp-for="Origen" class="form-control" />
+                    <span asp-validation-for="Origen" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Destino" class="form-label"></label>
+                    <input asp-for="Destino" class="form-control" />
+                    <span asp-validation-for="Destino" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DistanciaKm" class="form-label"></label>
+                    <input asp-for="DistanciaKm" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="DistanciaKm" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DuracionEstimada" class="form-label"></label>
+                    <input asp-for="DuracionEstimada" class="form-control" />
+                    <span asp-validation-for="DuracionEstimada" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ServicioId" class="form-label">Servicio</label>
+                    <select asp-for="ServicioId" class="form-select" asp-items="ViewBag.ServicioId"></select>
+                    <span asp-validation-for="ServicioId" class="text-danger"></span>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

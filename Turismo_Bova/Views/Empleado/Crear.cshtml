@@ -1,0 +1,111 @@
+﻿@model Turismo_Bova.Models.Empleado
+@{
+    ViewData["Title"] = "Crear Empleado";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Dashboard.css" />
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="dashboard-header mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1>Registrar nuevo empleado</h1>
+                </div>
+                <div>
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-calendar me-2"></i>
+                        <span id="current-date"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-facturas">
+                    <div class="card-body">
+                        <form asp-controller="Empleado" asp-action="Crear" method="post">
+                            @Html.AntiForgeryToken()
+
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                            <div class="mb-3">
+                                <label asp-for="Nombre" class="form-label">Nombre</label>
+                                <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre completo" required />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Dni" class="form-label">DNI</label>
+                                <input asp-for="Dni" class="form-control"
+                                       maxlength="8" minlength="8"
+                                       pattern="\d{8}" inputmode="numeric"
+                                       placeholder="Ingrese DNI de 8 dígitos" required />
+                                <span asp-validation-for="Dni" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Correo" class="form-label">Correo</label>
+                                <input asp-for="Correo" class="form-control" placeholder="usuario@ejemplo.com" required />
+                                <span asp-validation-for="Correo" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Telefono" class="form-label">Teléfono</label>
+                                <input asp-for="Telefono" class="form-control"
+                                       maxlength="9" minlength="9"
+                                       pattern="^[1-9]\d{8}$" inputmode="numeric"
+                                       placeholder="Ingrese teléfono de 9 dígitos sin 0 inicial" required />
+                                <span asp-validation-for="Telefono" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Cargo" class="form-label">Cargo</label>
+                                <select asp-for="Cargo" class="form-select">
+									<option value="">-- Seleccione un cargo --</option>
+									<option value="Administrador">Administrador</option>
+									<option value="Supervisor">Supervisor</option>
+                                    <option value="Ejecutivo de Contratos">Ejecutivo de Contratos</option>
+                                    <option value="Planificador de Rutas">Planificador de Rutas</option>
+                                    <option value="Inspector de Flota">Inspector de Flota</option>
+                                    <option value="Coordinador de Mantenimiento">Coordinador de Mantenimiento</option>
+                                    <option value="Coordinador de Flota">Coordinador de Flota</option>
+                                    <option value="Coordinador de Conductores">Coordinador de Conductores</option>
+                                    <option value="Conductor">Conductor</option>
+                                    <option value="Mecanico">Mecanico</option>
+                                </select>
+                                <span asp-validation-for="Cargo" class="text-danger"></span>
+                            </div>
+
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save me-1"></i> Guardar
+                                </button>
+                                <a asp-controller="Empleado" asp-action="Index" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Volver
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script>
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,103 @@
+﻿@model List<Turismo_Bova.Models.Vehiculo>
+@{
+    ViewData["Title"] = "Vehículos";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Vehículos Registrados</h1>
+        <a asp-action="Crear" class="btn btn-success">
+            <i class="fas fa-plus"></i> Nuevo Vehículo
+        </a>
+    </div>
+
+    <div class="card border-primary">
+        <div class="card-body">
+            <table id="tablaVehiculos" class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Placa</th>
+                        <th>Capacidad</th>
+                        <th>Estado</th>
+                        <th>Fecha Adquisición</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Model)
+                    {
+                        <tr>
+                            <td>@v.Id</td>
+                            <td>@v.Marca</td>
+                            <td>@v.Modelo</td>
+                            <td>@v.Placa</td>
+                            <td>@v.Capacidad</td>
+                            <td>@v.Estado</td>
+                            <td>@v.FechaAdquisicion.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <a asp-action="Editar" asp-route-id="@v.Id" class="btn btn-warning btn-sm me-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm btn-eliminar" data-id="@v.Id">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 🔁 Formulario oculto para eliminar -->
+<form id="form-eliminar" method="post" asp-action="EliminarConfirmar" style="display:none;">
+    <input type="hidden" name="id" id="input-id" />
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('current-date')?.textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaVehiculos').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                },
+                pageLength: 5,
+                responsive: true
+            });
+
+            // SweetAlert para confirmación de eliminación
+            document.querySelectorAll('.btn-eliminar').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.dataset.id;
+
+                    Swal.fire({
+                        title: '¿Eliminar este vehículo?',
+                        text: "Esta acción no se puede deshacer.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('input-id').value = id;
+                            document.getElementById('form-eliminar').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
